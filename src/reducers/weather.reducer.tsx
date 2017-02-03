@@ -1,10 +1,15 @@
 import {FETCH_WEATHER } from '../actions/index';
 
 function weatherReducer(state: any = [], action: any) {
-//    console.log("Action: " + action.payload.data);
+    if (action) {
+        console.log("Action " + action.type);
+    }
+
     switch(action.type) {
-        case FETCH_WEATHER:
-            return [action.payload.data];
+        case "FETCH_WEATHER_FULFILLED": {
+            console.log("Action: " + action.payload.data);
+            return [action.payload.data, ...state];
+        }
     }
     return state;
 }
