@@ -1,10 +1,10 @@
 // Import React and React DOM
 import * as React from 'react';
+import * as Redux from 'redux';
 import { render } from 'react-dom';
-import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-
-import rootReducer from './reducers'
+import promiseMiddleware from 'redux-promise-middleware';
+import { reducers } from './reducers'
 
 // Import the Hot Module Reloading App Container – more on why we use 'require' below
 const { AppContainer } = require('react-hot-loader');
@@ -19,12 +19,14 @@ declare var module: { hot: any };
 const rootEl = document.getElementById('app');
 
 //  creates the applciation 'store' from the combined states
-const store = createStore(rootReducer)
+//const store = createStore(rootReducer)
+
+const createStoreWithMiddleware = Redux.applyMiddleware(promiseMiddleware())(Redux.createStore);
 
 // And render our App into it, inside the HMR App ontainer which handles the hot reloading
 render(
   <AppContainer>
-    <Provider store={store}>
+    <Provider store={createStoreWithMiddleware(reducers)}>
       <App />
     </Provider>
   </AppContainer>,

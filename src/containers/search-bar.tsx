@@ -1,6 +1,11 @@
 import * as React from 'react';
+import * as ReactRedux from 'react-redux';
+import * as Redux from 'redux';
 
-export default class SearchBar extends React.Component<any, any> {
+import { fetchWeather } from '../actions/index';
+
+class SearchBar extends React.Component<any, any> {
+
     constructor(props: any) {
         super(props);
 
@@ -8,18 +13,26 @@ export default class SearchBar extends React.Component<any, any> {
 
         // What on earth?  A completely silly hack for some problem.....
         this.onInputChange = this.onInputChange.bind(this);
+        this.onFormSubmit = this.onFormSubmit.bind(this);
     }
 
-    onInputChange(event: any) : void {
-        console.log(event.target.value);
+    onInputChange(event: any): void {
         this.setState({term: event.target.value});
+    }
+
+    onFormSubmit(event: any): void {
+        event.preventDefault();
+
+        // We need to go and get weather data
+        this.props.fetchWeather(this.state.term, "us");
+        this.setState({term: ""});
     }
 
     render() {
         return (
-            <form className="input-group">
+            <form onSubmit={this.onFormSubmit} className="input-group">
                 <input
-                    placeholder="Get a five day forecast in your favorite cities"
+                    placeholder="City"
                     className="form-control"
                     value={this.state.term}
                     onChange={this.onInputChange}
@@ -31,3 +44,9 @@ export default class SearchBar extends React.Component<any, any> {
         );
     }
 }
+
+function mapDispatchToProps(dispatch: any) {
+    return Redux.bindActionCreators({ fetchWeather }, dispatch);
+}
+
+export default ReactRedux.connect(null, mapDispatchToProps)(SearchBar);

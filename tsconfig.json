@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
     "jsx": "react",
-    "target": "ES5",
+    "target": "ES6",
     "module": "commonjs",
     "moduleResolution": "node",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": false,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "outDir": "./build/",
     "preserveConstEnums": true
   },
