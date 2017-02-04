@@ -4,5 +4,8 @@
     "react-dom": "registry:npm/react-dom#15.0.1+20160826174104",
     "react-redux": "registry:npm/react-redux#4.4.0+20160614222153",
     "react-sparklines": "registry:npm/react-sparklines#1.4.1+20160127183143"
+  },
+  "globalDependencies": {
+    "google.maps": "registry:dt/google.maps#3.25.0+20161208205818"
   }
 }

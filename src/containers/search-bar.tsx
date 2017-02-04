@@ -24,7 +24,7 @@ class SearchBar extends React.Component<any, any> {
         event.preventDefault();
 
         // We need to go and get weather data
-        this.props.fetchWeather(this.state.term, "us");
+        this.props.fetchWeather(this.state.term, "uk");
         this.setState({term: ""});
     }
 

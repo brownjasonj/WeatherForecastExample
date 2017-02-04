@@ -2,6 +2,9 @@ import * as React from 'react';
 import * as ReactRedux from 'react-redux';
 import * as SparkLines from 'react-sparklines';
 
+import { Chart } from '../components/chart';
+import { GoogleMap } from '../components/google-map';
+
 class WeatherList extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
@@ -10,25 +13,17 @@ class WeatherList extends React.Component<any, any> {
     renderWeather(cityData) {
         const cityName: string = cityData.city.name;
         const temps: number[] = cityData.list.map((weather) => weather.main.temp);
+        const pressures: number[] = cityData.list.map((weather) => weather.main.pressure);
+        const humidities: number[] = cityData.list.map((weather) => weather.main.humidity);
+        const {lon, lat} = cityData.city.coord;
+
         console.log("Temp: " + temps);
         return (
             <tr key={cityName}>
-                <td>{cityName}</td>
-                <td>
-                    <SparkLines.Sparklines data={cityData.list.map((weather) => weather.main.temp)}>
-                        <SparkLines.SparklinesLine color="red" />    
-                    </SparkLines.Sparklines>  
-                </td>
-                <td>
-                    <SparkLines.Sparklines data={cityData.list.map((weather) => weather.main.pressure)}>
-                        <SparkLines.SparklinesLine color="blue" />    
-                    </SparkLines.Sparklines>  
-                </td>
-                <td>
-                    <SparkLines.Sparklines data={cityData.list.map((weather) => weather.main.humidity)}>
-                        <SparkLines.SparklinesLine color="black" />    
-                    </SparkLines.Sparklines>  
-                </td>
+                <td><GoogleMap lat={lat} lon={lon} /></td>
+                <td><Chart data={temps} colour="orange" units="K"/></td>
+                <td><Chart data={pressures} colour="green" units="(hPa)"/></td>
+                <td><Chart data={humidities} colour="black" units="(%)"/></td>
             </tr>
         );
     }
@@ -40,9 +35,9 @@ class WeatherList extends React.Component<any, any> {
                 <thead>
                     <tr>
                         <th>City</th>
-                        <th>Temperature</th>
-                        <th>Pressure</th>
-                        <th>Humidity</th>
+                        <th>Temperature (K)</th>
+                        <th>Pressure (hPa)</th>
+                        <th>Humidity (%)</th>
                     </tr>
                 </thead>
                 <tbody>
